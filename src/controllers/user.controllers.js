@@ -6,10 +6,6 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 
 const registerUser = asyncHandler(async (req, res) => {
 
-  
-
-  // retrun res
-
   // get user details from frontend
   const { username, email, fullName, password } = req.body;
   console.log("Full Name: ", fullName);
@@ -66,8 +62,9 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while registering the User")
   }
 
+  // retrun res
   return res.status(201).json(
-    new ApiResponse(200, createdUser, "User Registered Successfully", )
+    new ApiResponse(200, createdUser, "User Registered Successfully")
   )
 
 
