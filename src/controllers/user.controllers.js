@@ -7,7 +7,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const registerUser = asyncHandler(async (req, res) => {
   // get user details from frontend
   const { username, email, fullName, password } = req.body;
-  console.log("Full Name: ", fullName);
+  // console.log("Full Name: ", fullName);
 
   // validation - not empty
   if (
@@ -72,4 +72,32 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "User Registered Successfully"));
 });
 
-export { registerUser };
+const loginUser = asyncHandler(async (req,res) => {
+   // req body -> data
+   const { username, email, password } = req.body;
+   if(!username || !email){
+    throw new ApiError(400, "Username or email is required")
+   }
+
+   const user = await User.findOne({
+    $or: [{username}, {email}]
+   })
+
+   if(!user){
+    throw new ApiError(404, "User not found!")
+   }
+
+   await user.isPasswordCorrect(password)
+
+
+   // username or email
+   // find the user
+   // password check
+   // access and refreshToken
+   // send secure cookies
+  
+
+})
+
+
+export { registerUser, loginUser };
